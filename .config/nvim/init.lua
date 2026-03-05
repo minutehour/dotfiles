@@ -51,13 +51,14 @@ require("nvim-treesitter.configs").setup({
 })
 
 -- LSPs
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "basedpyright", "tinymist" })
+vim.lsp.enable({ "clangd", "lua_ls", "rust_analyzer", "ty", "tinymist", "zls" })
 
 -- LSP configs
 vim.lsp.config("lua_ls", { settings = { Lua = { workspace = { library = vim.api.nvim_get_runtime_file("", true) } } } })
 
 -- efmls formatting
 local efm_languages = {
+	c = { require("efmls-configs.formatters.clang_format"), require("efmls-configs.linters.clang_format") },
 	lua = { require("efmls-configs.formatters.stylua") },
 	markdown = { require("efmls-configs.formatters.mdformat") },
 	nix = { require("efmls-configs.formatters.nixfmt") },
