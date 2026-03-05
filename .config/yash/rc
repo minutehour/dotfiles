@@ -170,11 +170,13 @@ COMMAND_NOT_FOUND_HANDLER=("$COMMAND_NOT_FOUND_HANDLER" '_file_type "$@"')
 # >>> common aliases and functions <<<
 
 alias -- -='cd -'
-alias la='ls -a'
+alias la='ls -A'
 alias ll='ls -l'
-alias lla='ll -a'
+alias lla='ll -A'
+alias l='ls -Ft'
 alias o='xdg-open'
 alias ip='ip -color=auto'
+alias nm='neomutt'
 
 # usage: weather [some place]
 # defaults to london
