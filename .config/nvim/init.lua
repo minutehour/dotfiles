@@ -69,7 +69,7 @@ local efm_languages = {
 	typst = { require("efmls-configs.formatters.typstyle") },
 }
 
-require("lspconfig").efm.setup({
+vim.lsp.config("efm", {
 	filetypes = vim.tbl_keys(efm_languages),
 	settings = {
 		rootMarkers = { ".git/" },
