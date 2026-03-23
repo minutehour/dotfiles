@@ -15,6 +15,7 @@ vim.o.pumheight = 20
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>e", ":lua MiniFiles.open()<CR>")
 vim.keymap.set("n", "<leader>f", ":Pick files<CR>")
+vim.keymap.set("n", "<leader>s", ":Pick grep_live<CR>")
 vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
 vim.keymap.set("n", "<leader>d", ":lua vim.diagnostic.open_float()<CR>")
 vim.keymap.set("n", "<leader>n", ":lua vim.diagnostic.jump({ count =  1 })<CR>")
