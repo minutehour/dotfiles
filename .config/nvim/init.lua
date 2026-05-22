@@ -26,7 +26,8 @@ vim.pack.add({
 	{ src = "https://git.mhsn.net/lain.vim" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/mason-org/mason-lspconfig.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = 'main' },
 	{ src = "https://github.com/nvim-mini/mini.nvim" },
 	{ src = "https://github.com/creativenull/efmls-configs-nvim" },
 })
@@ -42,17 +43,11 @@ require("mini.icons").setup({ style = "ascii" })
 require("mini.pick").setup()
 require("mini.surround").setup()
 require("mini.completion").setup({ window = { info = { height = 80, width = 80 } } })
-require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "python", "rust", "typst" },
-	sync_install = false,
-	auto_install = true,
-	ignore_install = {},
-	modules = {},
-	highlight = { enable = true },
-})
 
 -- LSPs
-vim.lsp.enable({ "clangd", "lua_ls", "rust_analyzer", "ty", "tinymist", "zls" })
+lsps = { "clangd", "lua_ls", "rust_analyzer", "ty", "tinymist", "zls", "efm" }
+vim.lsp.enable(lsps)
+require("mason-lspconfig").setup({ ensure_installed = lsps })
 
 -- LSP configs
 vim.lsp.config("lua_ls", { settings = { Lua = { workspace = { library = vim.api.nvim_get_runtime_file("", true) } } } })
@@ -91,5 +86,20 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 			return
 		end
 		vim.lsp.buf.format({ name = "efm" })
+	end,
+})
+
+-- automatically install treesitter parsers
+vim.api.nvim_create_autocmd("FileType", {
+	callback = function(args)
+		local ft = args.match
+		local ts = require("nvim-treesitter")
+
+		if vim.iter(ts.get_installed()):find(ft) then
+			return
+		elseif vim.iter(ts.get_available()):find(ft) then
+			ts.install(ft)
+		end
+
 	end,
 })
