@@ -37,17 +37,13 @@ vim.cmd.colorscheme("lain")
 
 -- plugin setup
 require("mason").setup()
+require("mason-lspconfig").setup({ ensure_installed = { "efm", "lua_ls" } })
 require("mini.align").setup()
 require("mini.files").setup({ windows = { preview = true, width_preview = 80 } })
 require("mini.icons").setup({ style = "ascii" })
 require("mini.pick").setup()
 require("mini.surround").setup()
 require("mini.completion").setup({ window = { info = { height = 80, width = 80 } } })
-
--- LSPs
-lsps = { "clangd", "lua_ls", "rust_analyzer", "ty", "tinymist", "zls", "efm" }
-vim.lsp.enable(lsps)
-require("mason-lspconfig").setup({ ensure_installed = lsps })
 
 -- LSP configs
 vim.lsp.config("lua_ls", { settings = { Lua = { workspace = { library = vim.api.nvim_get_runtime_file("", true) } } } })
